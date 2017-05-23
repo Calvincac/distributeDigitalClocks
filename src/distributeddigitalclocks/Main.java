@@ -4,22 +4,13 @@
  */
 package distributeddigitalclocks;
 
+
 import java.awt.GridLayout;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 
-/**
- *
- * @author 631510487
- */
 public class Main {
     
     private static JLabel label1 = new JLabel();
@@ -35,6 +26,7 @@ public class Main {
         clock1();
         clock2();
         clock3();
+        
         button1.setText("Novo Alarme");
         button2.setText("Novo Alarme");
         button3.setText("Novo Alarme");
@@ -47,82 +39,46 @@ public class Main {
         frame.add(label3);
         frame.add(button1);
         frame.add(button2);
-        frame.add(button3);
-        
+        frame.add(button3);        
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
-        //frame.pack();
-    
+        frame.setVisible(true);    
     }
 
-    public static void clock1()
+    public static void clock1() throws InterruptedException
     {
         Thread clock1 = new Thread(){
             
            public void run() {
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,2);
-                
-                for (int i=0; i < 10000; i++) {
-                    gregorian.add(Calendar.SECOND, 1);
-                    String time = format.format(gregorian.getTime());
-                    
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        label1.setText(time);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+               Clock clock = new Clock(label1, button1);
+               clock.implement();
            }        
         };
         clock1.start();
+        clock1.sleep(1000);
     }
     
-    public static void clock2()
+    public static void clock2() throws InterruptedException
     {
         Thread clock2 = new Thread(){        
            public void run() {
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,1);
-                
-                for (int i=0; i < 10000; i++) {
-                    gregorian.add(Calendar.SECOND, 1);
-                    String time = format.format(gregorian.getTime());
-                    
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        label2.setText(time);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+               Clock clock = new Clock(label2, button2);
+               clock.implement();
            }        
         };
-        clock2.start();        
+        clock2.start();
+        clock2.sleep(3000);        
     }
     
-    public static void clock3()
+    public static void clock3() throws InterruptedException
     {     
         Thread clock3 = new Thread(){        
            public void run() {
-                SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-                Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,3);
-                
-                for (int i=0; i < 10000; i++) {
-                    gregorian.add(Calendar.SECOND, 1);
-                    String time = format.format(gregorian.getTime());
-                    
-                    try {
-                        TimeUnit.SECONDS.sleep(1);
-                        label3.setText(time);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
-                    }
-                }
+               Clock clock = new Clock(label3, button3);
+               clock.implement();
            }        
         };
-        clock3.start();        
+        clock3.start();
+        clock3.sleep(2000);        
     }
 }
