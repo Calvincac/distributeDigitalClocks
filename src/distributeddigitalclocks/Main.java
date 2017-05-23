@@ -4,12 +4,10 @@
  */
 package distributeddigitalclocks;
 
-
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-
 
 public class Main {
     
@@ -22,11 +20,31 @@ public class Main {
     private static  JFrame frame = new JFrame("Digital Clocks");
     
     public static void main(String[] args) throws InterruptedException
-    {        
-        clock1();
-        clock2();
-        clock3();
+    {   
+        Clock firstClock = new Clock(label1, button1);
+        Clock secondClock = new Clock(label2, button2);
+        Clock thirdClock = new Clock(label3, button3);
         
+        setClockThread(firstClock, 1000);
+        setClockThread(secondClock, 3000);
+        setClockThread(thirdClock, 2000);
+        
+        buildFrame();    
+    }
+
+    public static void setClockThread(Clock clock, int miliseconds) throws InterruptedException
+    {
+       Thread thread= new Thread(){        
+           public void run() {               
+               clock.implement();
+           }        
+        };       
+        thread.start();
+        thread.sleep(miliseconds);          
+    }
+    
+    public static void buildFrame()
+    {
         button1.setText("Novo Alarme");
         button2.setText("Novo Alarme");
         button3.setText("Novo Alarme");
@@ -42,43 +60,6 @@ public class Main {
         frame.add(button3);        
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);    
-    }
-
-    public static void clock1() throws InterruptedException
-    {
-        Thread clock1 = new Thread(){
-            
-           public void run() {
-               Clock clock = new Clock(label1, button1);
-               clock.implement();
-           }        
-        };
-        clock1.start();
-        clock1.sleep(1000);
-    }
-    
-    public static void clock2() throws InterruptedException
-    {
-        Thread clock2 = new Thread(){        
-           public void run() {
-               Clock clock = new Clock(label2, button2);
-               clock.implement();
-           }        
-        };
-        clock2.start();
-        clock2.sleep(3000);        
-    }
-    
-    public static void clock3() throws InterruptedException
-    {     
-        Thread clock3 = new Thread(){        
-           public void run() {
-               Clock clock = new Clock(label3, button3);
-               clock.implement();
-           }        
-        };
-        clock3.start();
-        clock3.sleep(2000);        
+        frame.setVisible(true);
     }
 }
