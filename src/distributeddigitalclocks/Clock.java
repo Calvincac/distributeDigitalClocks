@@ -33,7 +33,7 @@ public class Clock {
     public void implement()
     {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
-        Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,2);
+        Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,0);
 
         for (int i=0; i < 10000; i++) {
             gregorian.add(Calendar.SECOND, 1);
