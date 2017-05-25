@@ -35,8 +35,8 @@ public class Clock {
     {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,2);
-        setAlarm(this.button);
-        
+        setAlarm(this.button);        
+
         for (int i=0; i < 10000; i++) {
             gregorian.add(Calendar.SECOND, 1);
             String time = format.format(gregorian.getTime());
