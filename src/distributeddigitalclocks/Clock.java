@@ -23,6 +23,7 @@ public class Clock {
     
     private JLabel label;
     private JButton button;
+    private String timeGiven = "6000";// only to define a value so that null pointer exception doesnt happen
         
     public Clock(JLabel label, JButton button)
     {
@@ -34,32 +35,37 @@ public class Clock {
     {
         SimpleDateFormat format = new SimpleDateFormat("HH:mm:ss");
         Calendar gregorian = new GregorianCalendar(2013,1,1,0,0,2);
-
+        setAlarm(this.button);
+        
         for (int i=0; i < 10000; i++) {
             gregorian.add(Calendar.SECOND, 1);
             String time = format.format(gregorian.getTime());
 
             try {
                 TimeUnit.SECONDS.sleep(1);
-                this.label.setText(time);
-                setAlarm(this.button, time);                
+                this.label.setText(time);               
                 this.label.setHorizontalAlignment(SwingConstants.CENTER);
+                verifyTime(time);
             } catch (InterruptedException ex) {
                 Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
     }
 
-    public void setAlarm(JButton button, String timeSet)
+    public void setAlarm(JButton button)
     {
         button.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-               String time = JOptionPane.showInputDialog("Set time to alarm clock (00:00:00): ");
-               if (time.equals(timeSet)) {
-                   System.out.println("hieeeeeeeeee");
-               }
+               timeGiven = JOptionPane.showInputDialog("Set time to alarm clock (00:00:00): ");
             }
         } );
+    }
+    
+    public void verifyTime(String timeSet)
+    {
+        if (timeGiven.equals(timeSet)) {
+           JOptionPane.showMessageDialog(null, "Alarm Alarm Alarm !!!");
+        }
     }
 }
